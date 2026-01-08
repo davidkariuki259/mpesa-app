@@ -21,7 +21,7 @@ class m260108_103541_create_stk_push_result_table extends Migration
             'result_description' => $this->string(),
             'amount' => $this->float(),
             'transaction_id' => $this->string(),
-            'timestamp' => $this-dateTime(),
+            'timestamp' => $this->dateTime(),
             'phone_number' => $this->integer(),
         ]);
     }

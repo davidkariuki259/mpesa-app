@@ -17,7 +17,7 @@ class m251231_105811_create_payments_table extends Migration
             'transaction_id' => $this->string(),
             'transaction_time' => $this->dateTime(),
             'business_short_code' => $this->integer(),
-            'bill_ref_number' => $this-string(),
+            'bill_ref_number' => $this->string(),
             'invoice_number' => $this->string(),
             'third_party_transaction_id' => $this->string(),
             'amount' => $this->float(),
