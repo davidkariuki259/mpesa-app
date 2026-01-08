@@ -14,6 +14,9 @@ class m251231_105847_create_logs_table extends Migration
     {
         $this->createTable('{{%logs}}', [
             'id' => $this->primaryKey(),
+            'type' => $this->string(10),  //api call or callback
+            'url' => $this->string(),
+            'result' => $this->json(),
         ]);
     }
 

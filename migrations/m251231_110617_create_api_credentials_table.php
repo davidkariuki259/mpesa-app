@@ -14,6 +14,10 @@ class m251231_110617_create_api_credentials_table extends Migration
     {
         $this->createTable('{{%api_credentials}}', [
             'id' => $this->primaryKey(),
+            'consumer_key' => $this->string(),
+            'consumer_secret' => $this->string(),
+            'token' => $this->string(),
+            'last_updated' => $this->dateTime(),
         ]);
     }
 
