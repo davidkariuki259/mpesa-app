@@ -28,9 +28,11 @@ class Logs extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['result'], 'safe'],
+            [['result','date_time'], 'safe'],
             [['type'], 'string', 'max' => 10],
             [['url'], 'string'],
+            [['method'],'string','max' => 10],
+            [['response_code'],'integer']
         ];
     }
 
@@ -44,6 +46,9 @@ class Logs extends \yii\db\ActiveRecord
             'type' => Yii::t('app', 'Type'),
             'url' => Yii::t('app', 'Url'),
             'result' => Yii::t('app', 'Result'),
+            'date_time' => Yii::t('app','Date'),
+            'method' => Yii::t('app','Method'),
+            'response_code' => Yii::t('app','Response Code'),
         ];
     }
 }
