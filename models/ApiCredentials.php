@@ -30,7 +30,8 @@ class ApiCredentials extends \yii\db\ActiveRecord
     {
         return [
             [['last_updated'], 'safe'],
-            [['consumer_key', 'consumer_secret', 'token'], 'string'],
+            [['consumer_key', 'consumer_secret', 'token','confirmation_url','validation_url'], 'string'],
+            [['short_code'],'integer'],
         ];
     }
 
@@ -45,6 +46,9 @@ class ApiCredentials extends \yii\db\ActiveRecord
             'consumer_secret' => Yii::t('app', 'Consumer Secret'),
             'token' => Yii::t('app', 'Token'),
             'last_updated' => Yii::t('app', 'Last Updated'),
+            'short_code' => Yii::t('app','Short Code'),
+            'confirmation_url' => Yii::t('app','Confirmation URL'),
+            'validation_url' => Yii::t('app','Validation URL'),
         ];
     }
 }

@@ -9,12 +9,25 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\Payments;
+use app\models\Transactions;
+use app\models\Logs;
+use app\models\SafaricomMpesaAPI;
 
 class ProcessPaymentsController extends Controller
 {
     /**
      * {@inheritdoc}
      */
+
+
+    public function beforeAction($action)
+    {
+        $this->enableCsrfValidation = false;
+        return parent::beforeAction($action);
+    }
+
+
     public function behaviors()
     {
         return [
@@ -23,14 +36,8 @@ class ProcessPaymentsController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => ['@'],
+                        'roles' => ['?'],
                     ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::class,
-                'actions' => [
-                    'logout' => ['post'],
                 ],
             ],
         ];
@@ -45,10 +52,6 @@ class ProcessPaymentsController extends Controller
             'error' => [
                 'class' => 'yii\web\ErrorAction',
             ],
-            'captcha' => [
-                'class' => 'yii\captcha\CaptchaAction',
-                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-            ],
         ];
     }
 
@@ -57,70 +60,30 @@ class ProcessPaymentsController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
+    public function actionConfirmPayment()
     {
-        return $this->render('index');
+        $postData = Yii::$app->request->post();
+        $ip_address = Yii::$app->request->userIP;
+
+        $payments = new Payments();
+        $payments->loadTransactionData($postData);
+        $payments->save();
+
+        $log_entry = new Logs();
+        $log_entry->type= 'incoming';
+        $log_entry->url = $ip_address;
+        $log_entry->result = $postData;
+        $log_entry->date_time = date('Y-m-d H:i:s');
+        $log_entry->method = 'POST';
+        $log_entry->response_code = SafaricomMpesaAPI::SUCCESS_RESPONSE;
+
+        $log_entry->save();
+
+        return [
+            'ResultCode' => 0,
+            'ResultDesc' => Yii::t('app', 'Success'),
+            //'ThirdPartyTransID' => 0,
+        ];
     }
 
-    /**
-     * Login action.
-     *
-     * @return Response|string
-     */
-    public function actionLogin()
-    {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        }
-
-        $model->password = '';
-        return $this->render('login', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Logout action.
-     *
-     * @return Response
-     */
-    public function actionLogout()
-    {
-        Yii::$app->user->logout();
-
-        return $this->goHome();
-    }
-
-    /**
-     * Displays contact page.
-     *
-     * @return Response|string
-     */
-    public function actionContact()
-    {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
-
-            return $this->refresh();
-        }
-        return $this->render('contact', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Displays about page.
-     *
-     * @return string
-     */
-    public function actionAbout()
-    {
-        return $this->render('about');
-    }
 }

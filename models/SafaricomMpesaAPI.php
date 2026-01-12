@@ -11,11 +11,16 @@ class SafaricomMpesaAPI extends Model{
     public $consumer_key;
     public $consumer_secret;
     public $token;
-    //public $method;
+    public $short_code;
     public $current_results;
+    public $validation_url;
+    public $callback_url;
 
-    const BASE_URL = "";
-    const REGISTER_URLS = "";
+    const BASE_URL = "https://api.safaricom.co.ke/";
+    const REGISTER_URLS = "https://api.safaricom.co.ke/mpesa/c2b/v1/registerurl";
+    const GENERATE_TOKEN = "https://api.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials";
+
+    const SUCCESS_RESPONSE = 0;
     
 
     public function __construct()
@@ -24,6 +29,9 @@ class SafaricomMpesaAPI extends Model{
         $this->consumer_key = $api_credentials->consumer_key;
         $this->consumer_secret = $api_credentials->consumer_secret;
         $this->token = $api_credentials->token;
+        $this->short_code = $api->short_code;
+        $this->callback_url = $api->callback_url;
+        $this->validation_url = $api->validation_url;
     }
 
 
@@ -86,7 +94,7 @@ class SafaricomMpesaAPI extends Model{
             $log = new Logs();
             $log->date_time = date('Y-m-d H:i:s');
             $log->url = $url;
-            $log->response_code = ''.$httpCode;
+            $log->response_code = $decoded['ResponseCode'];
             $log->method = $method;
             $log->result = $response;
 
@@ -116,20 +124,20 @@ class SafaricomMpesaAPI extends Model{
     {
        // $data = array('client_id' => $client_id, 'client_secret' => $client_secret, 'grant_type' => 'client_credentials');
 
-        $ch = curl_init(ConfigHelper::get('starlink_authentication_url'));
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                curl_setopt($ch, CURLOPT_POST, true);
-                curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-type: application/x-www-form-urlencoded']);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query([
-                    'client_id' => ConfigHelper::get('starlink_client_id'),
-                    'client_secret' => ConfigHelper::get('starlink_client_secret'),
-                    'grant_type' => ConfigHelper::get('starlink_grant_type'),
-                ]));
 
-                $response = curl_exec($ch);
-                $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-                $url = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
-                curl_close($ch);
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, self::GENERATE_TOKEN);
+        $credentials = base64_encode($this->consumer_key.':'.$this->consumer_secret);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array('Authorization: Basic '.$credentials)); //setting a custom header
+        curl_setopt($curl, CURLOPT_HEADER, false);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+
+        $curl_response = curl_exec($curl);
+        $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
+        
 
 
         //$responded = json_decode($response, true);
@@ -139,40 +147,68 @@ class SafaricomMpesaAPI extends Model{
 
         $log = new StarlinkLogs();
         $log->date_time = date('Y-m-d H:i:s');
-        $log->endpoint = $url;
-        $log->status_code = ''.$httpCode;
-        $log->comment = 'Generate Access Token';
-        $log->errors = '';
-        $log->warnings = '';
-        $log->information = '';
-        $log->is_valid = '';
+        $log->url = self::GENERATE_TOKEN;
+        $log->response_code = ''.$httpCode;
+        $log->method = 'GET';
+        $log->result = $curl_response;
 
         $log->save();
 
-        if($httpCode == self::SUCCESS_CODE)
-        {
-        if($decoded = json_decode($response,true) )
-        {
+        $api_credentials = (new ApiCredential())->findOne();
+        $api_credentials->token = json_decode($curl_response)->access_token;
+        $api_credentials->save();
 
-
-
-            $token = $decoded['access_token'];
-            exec('/var/www/splynx/system/script/addon config-set --addon="splynx_starlink" --key="starlink_access_token" --value="' . $token . '"');
-            return $token;
-        }
-        }
-        //return empty array if non-json data
-
-            return false;
+        return json_decode($curl_response)->access_token;
 
     }
 
-    //function to fetch actual results from api call
-    public function extract_results($results)
+
+    public function registerCallbackUrls()
     {
-        return $results['content']['results'];
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, static::REGISTER_URLS);
 
+        curl_setopt($curl, CURLOPT_HTTPHEADER, ['Content-Type:application/json', 'Authorization:Bearer ' . $this->token]);
+
+        $postData = [
+            'ShortCode' => $this->short_code,
+            'ResponseType' => 'Completed',
+            'ConfirmationURL' => $this->confirmation_url,
+            'ValidationURL' => $this->validation_url,
+        ];
+
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_POST, true);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($postData, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
+
+        $curl_response = curl_exec($curl);
+        //$this->_response = $curl_response;
+        $json_response = json_decode($curl_response, true);
+
+        if($decoded = json_decode($curl_response,true) )
+        {
+            $log = new Logs();
+            $log->date_time = date('Y-m-d H:i:s');
+            $log->url = $url;
+            $log->response_code = ''.$decoded['ResponseCode'];
+            $log->method = $method;
+            $log->result = $response;
+
+            $log->save();
+            //print_r($log);
+            $this->current_results = $decoded;
+            //return $decoded;
+        }
+
+        if (isset($json_response['ResponseDescription']) and $json_response['ResponseDescription'] == 'success') {
+            //exec('/var/www/splynx/system/script/addon config-set --addon=splynx_addon_safaricom_mpesa --key=is_registered_urls --value=true');
+            return true;
+        }
+
+        return false;
     }
+
+
 
     //declare url constants
 

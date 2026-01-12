@@ -67,4 +67,25 @@ class Payments extends \yii\db\ActiveRecord
             'reversal_status' => Yii::t('app', 'Reversal Status'),
         ];
     }
+
+    public function loadTransactionData(array $data)
+    {
+        if (!empty($data)) {
+            $this->transaction_id = $data['TransID'];
+            $this->transaction_time = $data['TransTime'];
+            $this->business_short_code = $data['BusinessShortCode'];
+            $this->bill_ref_number = $data['BillRefNumber'];
+            $this->invoice_number = $data['InvoiceNumber'];
+            $this->third_party_transaction_id = $data['ThirdPartyTransID'];
+            $this->amount = floatval($data['TransAmount']);
+            $this->phone_number = $data['MSISDN'];            
+            $this->first_name = $data['FirstName'];
+            $this->second_name = $data['MiddleName'];
+            $this->last_name = $data['LastName'];
+            $this->account_balance = (float)$data['OrgAccountBalance'];
+
+        }
+    }
+
+
 }
