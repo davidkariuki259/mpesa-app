@@ -3,16 +3,18 @@
 namespace app\controllers;
 
 use Yii;
-use yii\filters\AccessControl;
-use yii\web\Controller;
+use app\models\Logs;
 use yii\web\Response;
-use yii\filters\VerbFilter;
+use yii\web\Controller;
+use app\models\Payments;
 use app\models\LoginForm;
 use app\models\ContactForm;
-use app\models\Payments;
 use app\models\Transactions;
-use app\models\Logs;
 use app\models\SafaricomMpesaAPI;
+
+
+use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 class ProcessPaymentsController extends Controller
 {
