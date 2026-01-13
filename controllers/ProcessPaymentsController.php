@@ -3,18 +3,18 @@
 namespace app\controllers;
 
 use Yii;
+
 use app\models\Logs;
-use yii\web\Response;
-use yii\web\Controller;
 use app\models\Payments;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\Transactions;
 use app\models\SafaricomMpesaAPI;
 
-
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\web\Response;
+use yii\web\Controller;
 
 class ProcessPaymentsController extends Controller
 {
@@ -64,6 +64,8 @@ class ProcessPaymentsController extends Controller
      */
     public function actionConfirmPayment()
     {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
         $postData = Yii::$app->request->post();
         $ip_address = Yii::$app->request->userIP;
 
