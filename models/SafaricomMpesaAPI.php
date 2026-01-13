@@ -15,6 +15,7 @@ class SafaricomMpesaAPI extends Model{
     public $current_results;
     public $validation_url;
     public $callback_url;
+    public $_response;
 
     const BASE_URL = "https://api.safaricom.co.ke/";
     const REGISTER_URLS = "https://api.safaricom.co.ke/mpesa/c2b/v1/registerurl";
@@ -88,6 +89,7 @@ class SafaricomMpesaAPI extends Model{
         //print_r($response_body);
 
         //return json if json response
+        $this->_response = $response;
 
         if($decoded = json_decode($response,true) )
         {
@@ -156,6 +158,7 @@ class SafaricomMpesaAPI extends Model{
 
         $api_credentials = (new ApiCredential())->findOne();
         $api_credentials->token = json_decode($curl_response)->access_token;
+        $api_credentials->last_updated = date('Y-m-d H:i:s');
         $api_credentials->save();
 
         return json_decode($curl_response)->access_token;
@@ -182,7 +185,7 @@ class SafaricomMpesaAPI extends Model{
         curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($postData, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
 
         $curl_response = curl_exec($curl);
-        //$this->_response = $curl_response;
+        $this->_response = $curl_response;
         $json_response = json_decode($curl_response, true);
 
         if($decoded = json_decode($curl_response,true) )
