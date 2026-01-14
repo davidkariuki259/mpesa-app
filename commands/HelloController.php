@@ -9,6 +9,9 @@ namespace app\commands;
 
 use yii\console\Controller;
 use yii\console\ExitCode;
+use app\models\SafaricomMpesaAPI;
+
+use Yii;
 
 /**
  * This command echoes the first argument that you have entered.
@@ -30,5 +33,13 @@ class HelloController extends Controller
         echo $message . "\n";
 
         return ExitCode::OK;
+    }
+
+    public function actionGenerateToken()
+    {
+        $safaricom = new SafaricomMpesaAPI();
+        $new_token = $safaricom->generateToken();
+
+        return $new_token;
     }
 }
