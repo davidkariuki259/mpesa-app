@@ -15,13 +15,20 @@ class SafaricomMpesaAPI extends Model{
     public $current_results;
     public $validation_url;
     public $callback_url;
+    public $passkey;
     public $_response;
 
     const BASE_URL = "https://api.safaricom.co.ke/";
     const REGISTER_URLS = "https://api.safaricom.co.ke/mpesa/c2b/v1/registerurl";
     const GENERATE_TOKEN = "https://api.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials";
+    const STK_PUSH = "mpesa/stkpush/v1/processrequest";
 
     const SUCCESS_RESPONSE = 0;
+
+    const POST_METHOD = "POST";
+    const PUT_METHOD = "PUT";
+    const GET_METHOD = "GET";
+
     
 
     public function __construct()
@@ -33,6 +40,8 @@ class SafaricomMpesaAPI extends Model{
         $this->short_code = $api->short_code;
         $this->callback_url = $api->callback_url;
         $this->validation_url = $api->validation_url;
+        $this->passkey = $api->passkey;
+        $this->stk_callback_url = $api->stk_callback_url;
     }
 
 
@@ -212,10 +221,39 @@ class SafaricomMpesaAPI extends Model{
     }
 
 
+    public function stk($amount, $msisdn)
+    {
 
-    //declare url constants
+        //$curl = curl_init(self::BASE_URL.self::STK_PUSH);
+        //curl_setopt($curl, CURLOPT_HTTPHEADER, ['Content-Type:application/json', 'Authorization:Bearer ' . $this->token]);
 
-    //define basic curl function
+        $time_stamp = date('YmdHis');
+        $encoded_password = base64_encode($this->short_code.$this->passkey.$time_stamp);
 
-    //define required API methods
+        $curl_Post_Data = [
+            'BusinessShortCode' => $this->short_code,
+            'Password' => $encoded_password,
+            'Timestamp' => $time_stamp,
+            'TransactionType' => 'CustomerBuyGoodsOnline',
+            'Amount' => $amount,
+            'PartyA' => $msisdn,
+            'PartyB' => $this->short_code,
+            'PhoneNumber' => $msisdn,
+            'CallBackURL' => $this->stk_callback_url,
+            'AccountReference' => 'Bernard Kamau',
+            'Transaction' => 'MPESA STK PUSH'
+
+        ];
+
+        $send_stk = $this->api_call(self::BASE_URL.self::STK_PUSH, self::POST_METHOD, $curl_Post_Data);
+
+        return $send_stk;
+
+
+
+    }
+
+
+
+
 }
