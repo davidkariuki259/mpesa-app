@@ -110,7 +110,7 @@ class SafaricomMpesaAPI extends Model{
             $log = new Logs();
             $log->date_time = date('Y-m-d H:i:s');
             $log->url = $url;
-            $log->response_code = $decoded['ResponseCode'];
+            $log->response_code = $decoded['ResponseCode'] ?? $decoded['errorCode'];
             $log->method = $method;
             $log->result = $response;
 
