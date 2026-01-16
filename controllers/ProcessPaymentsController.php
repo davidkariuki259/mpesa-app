@@ -131,8 +131,8 @@ class ProcessPaymentsController extends Controller
         $payments->loadStkData($new_data);
         if (!$payments->save()) {
         Yii::error([
-            'errors' => $model->errors,
-            'attributes' => $model->attributes,
+            'errors' => $payments->errors,
+            'attributes' => $payments->attributes,
         ], 'payments');
         }
         //$payments->save();
