@@ -72,7 +72,7 @@ class Payments extends \yii\db\ActiveRecord
     public function loadTransactionData(array $data)
     {
         if (!empty($data)) {
-            $data = json_decode($data);
+            //$data = json_decode($data);
             $this->transaction_id = $data['TransID'];
             $this->transaction_time = $data['TransTime'];
             $this->business_short_code = $data['BusinessShortCode'];
@@ -89,7 +89,7 @@ class Payments extends \yii\db\ActiveRecord
         }
     }
 
-    public function loadStkData(array $data)
+    public function loadStkData(array $callbacData)
     {
         //$callbackData=json_decode($data);
         $this->transaction_id=$callbackData->Result->TransactionID;
