@@ -61,7 +61,7 @@ class SendPushController extends Controller
 
 
         $mpesa_api = new SafaricomMpesaAPI();
-        $stk_request = $mpesa_api()->stk($getAmount,$getPhone);
+        $stk_request = $mpesa_api->stk($getAmount,$getPhone);
 
         //print_r($registration);
 
