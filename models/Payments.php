@@ -92,10 +92,16 @@ class Payments extends \yii\db\ActiveRecord
     public function loadStkData(array $callbackData)
     {
         //$callbackData=json_decode($data);
-        $this->transaction_id=$callbackData->Result->TransactionID;
+        /* $this->transaction_id=$callbackData->Result->TransactionID;
         $this->transaction_time=$callbackData->Result->ResultParameters->ResultParameter[4]->Value;
         $this->amount=$callbackData->Result->ResultParameters->ResultParameter[1]->Value;
         $this->account_balance=$callbackData->Result->ResultParameters->ResultParameter[6]->Value;
+ */
+
+        $this->transaction_id=$callbackData['CallbackMetadata']['Item']['MpesaReceiptNumber'];
+        $this->transaction_time=$callbackData['CallbackMetadata']['Item']['TransactionDate'];
+        $this->amount=$callbackData['CallbackMetadata']['Item']['Amount'];
+        $this->account_balance=$callbackData['CallbackMetadata']['Item']['Balance'];
 
         /*
         $resultCode=$callbackData->Result->ResultCode;
