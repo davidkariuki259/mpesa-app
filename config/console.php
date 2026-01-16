@@ -5,6 +5,7 @@ $db = require __DIR__ . '/db.php';
 
 $config = [
     'id' => 'basic-console',
+    'timeZone' => 'Africa/Nairobi',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'app\commands',
@@ -26,10 +27,6 @@ $config = [
             ],
         ],
         'db' => $db,
-        'formatter' => [
-        'class' => 'yii\i18n\Formatter',
-        'timeZone' => 'Africa/Nairobi'
-    ],
     ],
     'params' => $params,
     /*

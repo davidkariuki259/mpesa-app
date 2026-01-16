@@ -5,6 +5,7 @@ $db = require __DIR__ . '/db.php';
 
 $config = [
     'id' => 'basic',
+    'timeZone' => 'Africa/Nairobi',
     'name' => 'My M-Pesa',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
@@ -43,10 +44,6 @@ $config = [
             ],
         ],
         'db' => $db,
-        'formatter' => [
-        'class' => 'yii\i18n\Formatter',
-        'timeZone' => 'Africa/Nairobi'
-        ],
         
         'urlManager' => [
             'enablePrettyUrl' => true,
