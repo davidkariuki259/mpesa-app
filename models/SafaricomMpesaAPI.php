@@ -31,7 +31,7 @@ class SafaricomMpesaAPI extends Model{
 
     
 
-    public function __construct()
+    public function init()
     {
         $api_credentials = ApiCredentials::findOne([]);
         $this->consumer_key = $api_credentials->consumer_key;
@@ -42,6 +42,8 @@ class SafaricomMpesaAPI extends Model{
         $this->validation_url = $api->validation_url;
         $this->passkey = $api->passkey;
         $this->stk_callback_url = $api->stk_callback_url;
+
+        parent::init();
     }
 
 
