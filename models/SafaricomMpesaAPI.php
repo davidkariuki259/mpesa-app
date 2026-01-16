@@ -208,7 +208,7 @@ class SafaricomMpesaAPI extends Model{
             $log->date_time = date('Y-m-d H:i:s');
             $log->url = static::REGISTER_URLS;
             $log->response_code = 1;
-            $log->method = $method;
+            $log->method = self::POST_METHOD;
             $log->result = $response;
 
             $log->save();
