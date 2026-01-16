@@ -40,7 +40,7 @@ class SafaricomMpesaAPI extends Model{
         $this->consumer_secret = $api_credentials->consumer_secret;
         $this->token = $api_credentials->token;
         $this->short_code = $api_credentials->short_code;
-        $this->callback_url = $api_credentials->callback_url;
+        $this->confirmation_url = $api_credentials->confirmation_url;
         $this->validation_url = $api_credentials->validation_url;
         $this->passkey = $api_credentials->passkey;
         $this->stk_callback_url = $api_credentials->stk_callback_url;
