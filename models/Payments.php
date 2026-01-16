@@ -115,8 +115,9 @@ class Payments extends \yii\db\ActiveRecord
 
         $this->amount = $metadata['Amount'];
         $this->transaction_id = $metadata['MpesaReceiptNumber'];
-        $this->transaction_time = $metadata['TransactionDate'];
+        $this->transaction_time = DateTime::createFromFormat('YmdHis', $metadata['TransactionDate'])->format('Y-m-d H:i:s');
         $this->phone_number = $metadata['PhoneNumber'];
+
 
         /*
         $resultCode=$callbackData->Result->ResultCode;

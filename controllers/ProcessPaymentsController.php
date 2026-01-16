@@ -125,12 +125,12 @@ class ProcessPaymentsController extends Controller
         $ip_address = Yii::$app->request->userIP;
         //$callback = array_key_exists($new_data['Body']['stkCallback']['CallbackMetadata']) ? $new_data['Body']['stkCallback']['CallbackMetadata'] : null;
 
-        //if(isset($new_data['ResultCode']) && $new_data['ResultCode'] === 0){
+        if(isset($new_data['ResultCode']) && $new_data['ResultCode'] === 0){
 
         $payments = new Payments();
         $payments->loadStkData($new_data);
         $payments->save();
-        //}
+        }
 
         $log_entry = new Logs();
         $log_entry->type= 'incoming';
