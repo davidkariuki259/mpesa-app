@@ -242,7 +242,7 @@ class SafaricomMpesaAPI extends Model{
             'TransactionType' => 'CustomerBuyGoodsOnline',
             'Amount' => $amount,
             'PartyA' => $msisdn,
-            'PartyB' => $this->short_code,
+            'PartyB' => '9078581',
             'PhoneNumber' => $msisdn,
             'CallBackURL' => $this->stk_callback_url,
             'AccountReference' => 'CompanyXLTD',
