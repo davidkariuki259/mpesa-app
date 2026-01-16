@@ -250,7 +250,7 @@ class SafaricomMpesaAPI extends Model{
 
         ];
 
-        $send_stk = $this->api_call(self::BASE_URL.self::STK_PUSH, self::POST_METHOD, $curl_Post_Data);
+        $send_stk = $this->api_call(self::STK_PUSH, self::POST_METHOD, $curl_Post_Data);
 
         return $send_stk;
 
