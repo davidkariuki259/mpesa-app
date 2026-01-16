@@ -182,10 +182,11 @@ class SafaricomMpesaAPI extends Model{
 
     public function registerCallbackUrls()
     {
+        $current_token = $this->generateToken();
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, static::REGISTER_URLS);
 
-        curl_setopt($curl, CURLOPT_HTTPHEADER, ['Content-Type:application/json', 'Authorization:Bearer ' . $this->token]);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, ['Content-Type:application/json', 'Authorization:Bearer ' . $current_token]);
 
         $postData = [
             'ShortCode' => $this->short_code,
