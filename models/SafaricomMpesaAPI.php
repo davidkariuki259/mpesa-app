@@ -245,8 +245,8 @@ class SafaricomMpesaAPI extends Model{
             'PartyB' => '9078581',
             'PhoneNumber' => $msisdn,
             'CallBackURL' => $this->stk_callback_url,
-            'AccountReference' => 'BernardKamau',
-            'Transaction' => 'BernardKamau'
+            'AccountReference' => 'CompanyXLTD',
+            'Transaction' => 'Payment of X'
 
         ];
 
