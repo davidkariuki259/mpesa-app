@@ -34,16 +34,16 @@ class SafaricomMpesaAPI extends Model{
     public function init()
     {
         parent::init();
-        $api_credentials = ApiCredentials::findOne([]);
-        print_r($api_credentials);
-        /*$this->consumer_key = "fytyty";
+        $api_credentials = (new ApiCredentials())->find()->one();
+        //print_r($api_credentials);
+        $this->consumer_key = $api_credentials->consumer_key;
         $this->consumer_secret = $api_credentials->consumer_secret;
         $this->token = $api_credentials->token;
         $this->short_code = $api->short_code;
         $this->callback_url = $api->callback_url;
         $this->validation_url = $api->validation_url;
         $this->passkey = $api->passkey;
-        $this->stk_callback_url = $api->stk_callback_url;*/
+        $this->stk_callback_url = $api->stk_callback_url;
 
         
     }
@@ -169,7 +169,7 @@ class SafaricomMpesaAPI extends Model{
 
         $log->save();
 
-        $api_credentials = (new ApiCredentials())->findOne([]);
+        $api_credentials = (new ApiCredentials())->find()->One();
         $api_credentials->token = json_decode($curl_response)->access_token;
         $api_credentials->last_updated = date('Y-m-d H:i:s');
         $api_credentials->save();
