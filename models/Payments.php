@@ -91,7 +91,7 @@ class Payments extends \yii\db\ActiveRecord
 
     public function loadStkData(array $data)
     {
-        $callbackData=json_decode($data);
+        //$callbackData=json_decode($data);
         $this->transaction_id=$callbackData->Result->TransactionID;
         $this->transaction_time=$callbackData->Result->ResultParameters->ResultParameter[4]->Value;
         $this->amount=$callbackData->Result->ResultParameters->ResultParameter[1]->Value;
