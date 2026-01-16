@@ -26,6 +26,10 @@ $config = [
             ],
         ],
         'db' => $db,
+        'formatter' => [
+        'class' => 'yii\i18n\Formatter',
+        'timeZone' => 'Africa/Nairobi'
+    ],
     ],
     'params' => $params,
     /*

@@ -43,6 +43,10 @@ $config = [
             ],
         ],
         'db' => $db,
+        'formatter' => [
+        'class' => 'yii\i18n\Formatter',
+        'timeZone' => 'Africa/Nairobi'
+        ],
         
         'urlManager' => [
             'enablePrettyUrl' => true,
