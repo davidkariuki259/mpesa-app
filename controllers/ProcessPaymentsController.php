@@ -117,7 +117,7 @@ class ProcessPaymentsController extends Controller
 
     public function actionProcessPush()
     {
-        //Yii::$app->response->format = Response::FORMAT_JSON;
+        Yii::$app->response->format = Response::FORMAT_JSON;
 
         //$postData = Yii::$app->request->post();
         $postData = file_get_contents('php://input');
