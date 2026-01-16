@@ -89,7 +89,7 @@ class Payments extends \yii\db\ActiveRecord
         }
     }
 
-    public function loadStkData(array $callbacData)
+    public function loadStkData(array $callbackData)
     {
         //$callbackData=json_decode($data);
         $this->transaction_id=$callbackData->Result->TransactionID;
