@@ -54,7 +54,7 @@ class RegisterUrlsController extends Controller
      */
     public function actionIndex()
     {
-        Yii::$app->response->format = Response::FORMAT_JSON;
+        //Yii::$app->response->format = Response::FORMAT_JSON;
         $token_generation = new SafaricomMpesaAPI();
         $token_generation->generateToken();
         $mpesa_api = new SafaricomMpesaAPI();
