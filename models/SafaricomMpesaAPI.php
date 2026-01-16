@@ -245,7 +245,7 @@ class SafaricomMpesaAPI extends Model{
             'PartyB' => $this->short_code,
             'PhoneNumber' => $msisdn,
             'CallBackURL' => $this->stk_callback_url,
-            'AccountReference' => 'Bernard Kamau',
+            'AccountReference' => 'BernardKamau',
             'Transaction' => 'MPESA STK PUSH'
 
         ];
