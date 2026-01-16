@@ -130,6 +130,7 @@ class ProcessPaymentsController extends Controller
         $payments = new Payments();
         $payments->loadStkData($new_data);
         $payments->save();
+        print_r($payments);
         }
 
         $log_entry = new Logs();
