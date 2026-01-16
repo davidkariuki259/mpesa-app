@@ -33,6 +33,7 @@ class SafaricomMpesaAPI extends Model{
 
     public function init()
     {
+        parent::init();
         $api_credentials = ApiCredentials::findOne([]);
         $this->consumer_key = $api_credentials->consumer_key;
         $this->consumer_secret = $api_credentials->consumer_secret;
@@ -43,7 +44,7 @@ class SafaricomMpesaAPI extends Model{
         $this->passkey = $api->passkey;
         $this->stk_callback_url = $api->stk_callback_url;
 
-        parent::init();
+        
     }
 
 
