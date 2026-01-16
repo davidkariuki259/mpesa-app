@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'short_code',
             'confirmation_url:url',
             'validation_url:url',
-            'stk_callback_url:url'
+            'stk_callback_url:url',
         ],
     ]) ?>
 
