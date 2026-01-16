@@ -20,7 +20,7 @@ class SafaricomMpesaAPI extends Model{
     public $_response;
 
     const BASE_URL = "https://api.safaricom.co.ke/";
-    const REGISTER_URLS = "https://api.safaricom.co.ke/mpesa/c2b/v1/registerurl";
+    const REGISTER_URLS = "https://api.safaricom.co.ke/mpesa/c2b/v2/registerurl";
     const GENERATE_TOKEN = "https://api.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials";
     const STK_PUSH = "mpesa/stkpush/v1/processrequest";
 
