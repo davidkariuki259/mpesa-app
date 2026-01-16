@@ -20,19 +20,11 @@ class ListTransactionsController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['logout','about'],
                 'rules' => [
                     [
-                        'actions' => ['logout','about'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::class,
-                'actions' => [
-                    'logout' => ['post'],
                 ],
             ],
         ];
