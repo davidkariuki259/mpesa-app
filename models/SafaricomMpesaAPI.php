@@ -160,7 +160,7 @@ class SafaricomMpesaAPI extends Model{
         //$token = $responded['access_token'];
 
 
-        $log = new StarlinkLogs();
+        $log = new Logs();
         $log->date_time = date('Y-m-d H:i:s');
         $log->url = self::GENERATE_TOKEN;
         $log->response_code = ''.$httpCode;
