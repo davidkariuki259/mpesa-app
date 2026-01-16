@@ -123,7 +123,7 @@ class ProcessPaymentsController extends Controller
         $postData = file_get_contents('php://input');
         $new_data = json_decode($postData,true);
         $ip_address = Yii::$app->request->userIP;
-        $callback = $data['Body']['stkCallback']['CallbackMetadata'] ?? null;
+        $callback = $new_data['Body']['stkCallback']['CallbackMetadata'] ?? null;
 
         if($callback){
 
