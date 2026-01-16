@@ -191,7 +191,7 @@ class SafaricomMpesaAPI extends Model{
             'ShortCode' => $this->short_code,
             'ResponseType' => 'Completed',
             'ConfirmationURL' => $this->confirmation_url,
-            'ValidationURL' => $this->validation_url,
+            //'ValidationURL' => $this->validation_url,
         ];
 
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
