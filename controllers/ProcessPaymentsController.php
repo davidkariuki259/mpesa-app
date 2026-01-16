@@ -123,9 +123,9 @@ class ProcessPaymentsController extends Controller
         $postData = file_get_contents('php://input');
         $new_data = json_decode($postData,true);
         $ip_address = Yii::$app->request->userIP;
-        $callback = array_key_exists($new_data['Body']['stkCallback']['CallbackMetadata']) ? $new_data['Body']['stkCallback']['CallbackMetadata'] : null;
+        //$callback = array_key_exists($new_data['Body']['stkCallback']['CallbackMetadata']) ? $new_data['Body']['stkCallback']['CallbackMetadata'] : null;
 
-        if($callback){
+        if(isset($new_data['ResultCode']) && $new_data['ResultCode'] === 0){
 
         $payments = new Payments();
         $payments->loadStkData($new_data);
