@@ -42,6 +42,7 @@ class Payments extends \yii\db\ActiveRecord
             [['business_short_code', 'phone_number', 'reversal_status'], 'integer'],
             [['amount', 'account_balance'], 'number'],
             [['transaction_id', 'bill_ref_number', 'invoice_number', 'third_party_transaction_id', 'first_name', 'second_name', 'last_name'], 'string'],
+            [['transaction_id'],'required'],
         ];
     }
 
