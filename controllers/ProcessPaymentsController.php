@@ -90,4 +90,29 @@ class ProcessPaymentsController extends Controller
         ];
     }
 
+    public function actionValidatePayment()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        $postData = Yii::$app->request->post();
+        $ip_address = Yii::$app->request->userIP;
+
+        $log_entry = new Logs();
+        $log_entry->type= 'incoming';
+        $log_entry->url = $ip_address;
+        $log_entry->result = $postData;
+        $log_entry->date_time = date('Y-m-d H:i:s');
+        $log_entry->method = 'POST';
+        $log_entry->response_code = SafaricomMpesaAPI::SUCCESS_RESPONSE;
+
+        $log_entry->save();
+
+        return [
+            'ResultCode' => 0,
+            'ResultDesc' => Yii::t('app', 'Success'),
+            //'ThirdPartyTransID' => 0,
+        ];
+
+    }
+
 }
