@@ -209,7 +209,7 @@ class SafaricomMpesaAPI extends Model{
             $log->url = static::REGISTER_URLS;
             $log->response_code = 1;
             $log->method = self::POST_METHOD;
-            $log->result = $response;
+            $log->result = $curl_response;
 
             $log->save();
             //print_r($log);
