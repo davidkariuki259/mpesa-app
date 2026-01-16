@@ -33,7 +33,7 @@ class SafaricomMpesaAPI extends Model{
 
     public function __construct()
     {
-        $api_credentials = (new ApiCredentials())->findOne();
+        $api_credentials = (new ApiCredentials())->findOne([]);
         $this->consumer_key = $api_credentials->consumer_key;
         $this->consumer_secret = $api_credentials->consumer_secret;
         $this->token = $api_credentials->token;
