@@ -14,6 +14,7 @@ class SafaricomMpesaAPI extends Model{
     public $short_code;
     public $current_results;
     public $validation_url;
+    public $confirmation_url;
     public $stk_callback_url;
     public $passkey;
     public $_response;
