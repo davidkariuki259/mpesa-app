@@ -36,7 +36,7 @@ class SafaricomMpesaAPI extends Model{
         parent::init();
         $api_credentials = ApiCredentials::findOne([]);
         print_r($api_credentials);
-        $this->consumer_key = $api_credentials->consumer_key;
+        $this->consumer_key = "fytyty";
         $this->consumer_secret = $api_credentials->consumer_secret;
         $this->token = $api_credentials->token;
         $this->short_code = $api->short_code;
