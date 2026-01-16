@@ -62,6 +62,8 @@ class RegisterUrlsController extends Controller
 
         $this->getView()->title = Yii::t('app','Register URLs');
 
+        print_r($reistration);
+
         return $this->render('index',['response' => $mpesa_api->_response]);
     }
 
