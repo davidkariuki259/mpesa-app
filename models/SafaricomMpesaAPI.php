@@ -169,7 +169,7 @@ class SafaricomMpesaAPI extends Model{
 
         $log->save();
 
-        $api_credentials = (new ApiCredential())->findOne();
+        $api_credentials = (new ApiCredentials())->findOne();
         $api_credentials->token = json_decode($curl_response)->access_token;
         $api_credentials->last_updated = date('Y-m-d H:i:s');
         $api_credentials->save();
