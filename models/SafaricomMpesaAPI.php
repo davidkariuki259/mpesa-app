@@ -207,7 +207,7 @@ class SafaricomMpesaAPI extends Model{
             $log = new Logs();
             $log->date_time = date('Y-m-d H:i:s');
             $log->url = static::REGISTER_URLS;
-            $log->response_code = ''.$decoded['ResponseCode'];
+            $log->response_code = 1;
             $log->method = $method;
             $log->result = $response;
 
