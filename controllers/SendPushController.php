@@ -57,7 +57,7 @@ class SendPushController extends Controller
 
         $getPhone = Yii::$app->request->get('phonenumber');
         $getAmount = Yii::$app->request->get('amount');
-        $getAmount = '254'.$getAmount;
+        $getAmount = '254'.$getPhone;
 
 
         $mpesa_api = new SafaricomMpesaAPI();
