@@ -124,9 +124,12 @@ class ProcessPaymentsController extends Controller
         $new_data = json_decode($postData,true);
         $ip_address = Yii::$app->request->userIP;
 
+        if($new_data['Body']['stkCallback']['CallbackMetadata']){
+
         $payments = new Payments();
         $payments->loadStkData($new_data);
         $payments->save();
+        }
 
         $log_entry = new Logs();
         $log_entry->type= 'incoming';
