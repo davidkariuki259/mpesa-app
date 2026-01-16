@@ -123,7 +123,7 @@ class ProcessPaymentsController extends Controller
         $ip_address = Yii::$app->request->userIP;
 
         $payments = new Payments();
-        $payments->loadTransactionData($postData);
+        $payments->loadStkData($postData);
         $payments->save();
 
         $log_entry = new Logs();

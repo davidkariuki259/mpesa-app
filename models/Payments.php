@@ -72,6 +72,7 @@ class Payments extends \yii\db\ActiveRecord
     public function loadTransactionData(array $data)
     {
         if (!empty($data)) {
+            $data = json_decode($data);
             $this->transaction_id = $data['TransID'];
             $this->transaction_time = $data['TransTime'];
             $this->business_short_code = $data['BusinessShortCode'];
@@ -86,6 +87,28 @@ class Payments extends \yii\db\ActiveRecord
             $this->account_balance = (float)$data['OrgAccountBalance'];
 
         }
+    }
+
+    public function loadStkData(array $data)
+    {
+        $callbackData=json_decode($data);
+        $this->transaction_id=$callbackData->Result->TransactionID;
+        $this->transaction_time=$callbackData->Result->ResultParameters->ResultParameter[4]->Value;
+        $this->amount=$callbackData->Result->ResultParameters->ResultParameter[1]->Value;
+        $this->account_balance=$callbackData->Result->ResultParameters->ResultParameter[6]->Value;
+
+        /*
+        $resultCode=$callbackData->Result->ResultCode;
+        $resultDesc=$callbackData->Result->ResultDesc;
+        $originatorConversationID=$callbackData->Result->OriginatorConversationID;
+        $conversationID=$callbackData->Result->ConversationID;
+        $transactionReceipt=$callbackData->Result->ResultParameters->ResultParameter[0]->Value;
+        $b2CWorkingAccountAvailableFunds=$callbackData->Result->ResultParameters->ResultParameter[2]->Value;
+        $b2CUtilityAccountAvailableFunds=$callbackData->Result->ResultParameters->ResultParameter[3]->Value;
+        $receiverPartyPublicName=$callbackData->Result->ResultParameters->ResultParameter[5]->Value;
+        $B2CChargesPaidAccountAvailableFunds=$callbackData->Result->ResultParameters->ResultParameter[6]->Value;
+        $B2CRecipientIsRegisteredCustomer=$callbackData->Result->ResultParameters->ResultParameter[7]->Value;
+        */
     }
 
 
