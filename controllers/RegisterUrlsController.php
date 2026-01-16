@@ -55,8 +55,8 @@ class RegisterUrlsController extends Controller
     public function actionIndex()
     {
         //Yii::$app->response->format = Response::FORMAT_JSON;
-        $token_generation = new SafaricomMpesaAPI();
-        $token_generation->generateToken();
+        //$token_generation = new SafaricomMpesaAPI();
+        //$token_generation->generateToken();
         $mpesa_api = new SafaricomMpesaAPI();
         $registration = $mpesa_api->registerCallbackUrls();
 
