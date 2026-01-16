@@ -94,7 +94,8 @@ class ProcessPaymentsController extends Controller
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
 
-        $postData = Yii::$app->request->post();
+        //$postData = Yii::$app->request->post();
+        $postData = file_get_contents('php://input');
         $postData = json_decode($postData,true);
         $ip_address = Yii::$app->request->userIP;
 
@@ -120,8 +121,8 @@ class ProcessPaymentsController extends Controller
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
 
-        $postData = Yii::$app->request->post();
-        //$postData = file_get_contents('php://input');
+        //$postData = Yii::$app->request->post();
+        $postData = file_get_contents('php://input');
         $new_data = json_decode($postData,true);
         $ip_address = Yii::$app->request->userIP;
         //$callback = array_key_exists($new_data['Body']['stkCallback']['CallbackMetadata']) ? $new_data['Body']['stkCallback']['CallbackMetadata'] : null;
