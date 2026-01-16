@@ -106,7 +106,7 @@ class Payments extends \yii\db\ActiveRecord
 
 
 
-        $items = $callbackData['CallbackMetadata']['Item'];
+        $items = $callbackData['Body']['stkCallback']['CallbackMetadata']['Item'];
 
         $metadata = [];
         foreach ($items as $item) {
