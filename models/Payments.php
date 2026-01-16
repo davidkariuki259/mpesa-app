@@ -69,7 +69,7 @@ class Payments extends \yii\db\ActiveRecord
         ];
     }
 
-    public function loadTransactionData(array $data)
+    public function loadTransactionData($data)
     {
         if (!empty($data)) {
             //$data = json_decode($data);
