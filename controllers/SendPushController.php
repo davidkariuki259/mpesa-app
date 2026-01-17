@@ -57,15 +57,22 @@ class SendPushController extends Controller
 
         $getPhone = Yii::$app->request->get('phonenumber');
         $getAmount = Yii::$app->request->get('amount');
-        $getPhone = '254'.$getPhone;
+
+        if($getAmount && $getPhone)
+        {
+            $getPhone = '254'.$getPhone;
 
 
-        $mpesa_api = new SafaricomMpesaAPI();
-        $stk_request = $mpesa_api->stk($getAmount,$getPhone);
 
-        //print_r($registration);
+            $mpesa_api = new SafaricomMpesaAPI();
+            $stk_request = $mpesa_api->stk($getAmount,$getPhone);
 
-        return $this->render('index',['response' => $mpesa_api->_response]);
+            //print_r($registration);
+
+            return $this->render('index',['response' => $mpesa_api->_response]);
+        }
+
+        return $this->render('index',['response' => $array]);
     }
 
 }
