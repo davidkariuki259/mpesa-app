@@ -40,7 +40,7 @@ class PaymentsController extends Controller
     {
         $dataProvider = new ActiveDataProvider([
             'query' => Payments::find(),
-            /*
+            
             'pagination' => [
                 'pageSize' => 50
             ],
@@ -49,7 +49,7 @@ class PaymentsController extends Controller
                     'id' => SORT_DESC,
                 ]
             ],
-            */
+            
         ]);
 
         return $this->render('index', [
