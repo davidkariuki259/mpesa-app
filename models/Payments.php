@@ -80,7 +80,7 @@ class Payments extends \yii\db\ActiveRecord
             $this->invoice_number = $data['InvoiceNumber'];
             $this->third_party_transaction_id = $data['ThirdPartyTransID'];
             $this->amount = floatval($data['TransAmount']);
-            $this->phone_number = (string)$data['MSISDN'];            
+            $this->phone_number = ''.$data['MSISDN'];            
             $this->first_name = $data['FirstName'];
             //$this->second_name = $data['MiddleName'];
             //$this->last_name = $data['LastName'];
