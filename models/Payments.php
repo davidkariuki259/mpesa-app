@@ -82,7 +82,7 @@ class Payments extends \yii\db\ActiveRecord
             $this->amount = floatval($data['TransAmount']);
             $this->phone_number = (string)$data['MSISDN'];            
             $this->first_name = $data['FirstName'];
-            $this->second_name = $data['MiddleName'];
+            //$this->second_name = $data['MiddleName'];
             $this->last_name = $data['LastName'];
             $this->account_balance = (float)$data['OrgAccountBalance'];
 
