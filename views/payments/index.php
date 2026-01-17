@@ -27,26 +27,27 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
+            //'id',
             'transaction_id',
             'transaction_time',
             'business_short_code',
-            'bill_ref_number',
+            //'bill_ref_number',
             //'invoice_number',
             //'third_party_transaction_id',
-            //'amount',
-            //'phone_number',
-            //'first_name',
+            'amount',
+            'phone_number',
+            'first_name',
             //'second_name',
             //'last_name',
-            //'account_balance',
+            'account_balance',
             //'reversal_status',
-            [
+            /*[
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Payments $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }
             ],
+            */
         ],
     ]); ?>
 
