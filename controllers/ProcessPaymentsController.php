@@ -68,6 +68,8 @@ class ProcessPaymentsController extends Controller
 
         //$postData = Yii::$app->request->post();
         $postData = Yii::$app->request->getRawBody();
+        $postData = json_decode($postData,true);
+
         $ip_address = Yii::$app->request->userIP;
 
         $payments = new Payments();
@@ -160,5 +162,8 @@ class ProcessPaymentsController extends Controller
             //'ThirdPartyTransID' => 0,
         ];
     }
+
+    public function actionProcessReversal()
+    {}
 
 }

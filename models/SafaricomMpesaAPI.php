@@ -23,6 +23,7 @@ class SafaricomMpesaAPI extends Model{
     const REGISTER_URLS = "https://api.safaricom.co.ke/mpesa/c2b/v2/registerurl";
     const GENERATE_TOKEN = "https://api.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials";
     const STK_PUSH = "mpesa/stkpush/v1/processrequest";
+    const REVERSAL = "mpesa/reversal/v1/request";
 
     const SUCCESS_RESPONSE = 0;
 
@@ -227,6 +228,38 @@ class SafaricomMpesaAPI extends Model{
 
 
     public function stk($amount, $msisdn)
+    {
+
+        //$curl = curl_init(self::BASE_URL.self::STK_PUSH);
+        //curl_setopt($curl, CURLOPT_HTTPHEADER, ['Content-Type:application/json', 'Authorization:Bearer ' . $this->token]);
+
+        $time_stamp = date('YmdHis');
+        $encoded_password = base64_encode($this->short_code.$this->passkey.$time_stamp);
+
+        $curl_Post_Data = [
+            'BusinessShortCode' => $this->short_code,
+            'Password' => $encoded_password,
+            'Timestamp' => $time_stamp,
+            'TransactionType' => 'CustomerBuyGoodsOnline',
+            'Amount' => $amount,
+            'PartyA' => $msisdn,
+            'PartyB' => '9078581',
+            'PhoneNumber' => $msisdn,
+            'CallBackURL' => $this->stk_callback_url,
+            'AccountReference' => 'CompanyXLTD',
+            'TransactionDesc' => 'Payment of X'
+
+        ];
+
+        $send_stk = $this->api_call(self::STK_PUSH, self::POST_METHOD, $curl_Post_Data);
+
+        return $send_stk;
+
+
+
+    }
+
+    public function reversal($transaction_id, $amount)
     {
 
         //$curl = curl_init(self::BASE_URL.self::STK_PUSH);
