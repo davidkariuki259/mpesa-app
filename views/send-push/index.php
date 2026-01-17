@@ -16,7 +16,7 @@ $this->title = 'My Yii Application';
         <form method="get">
   <div class="form-group">
     <label for="phonenumber">Phone Number</label>
-    <input type="text" class="form-control" id="phonenumber" name="phonenumber" placeholder="254712345678">
+    <input type="text" class="form-control" id="phonenumber" name="phonenumber" placeholder="712345678">
     <label for="amount">Amount</label>
     <input type="text" class="form-control" id="amount" name="amount" placeholder="1">
   </div>
