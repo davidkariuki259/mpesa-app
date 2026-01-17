@@ -72,7 +72,7 @@ class SendPushController extends Controller
             return $this->render('index',['response' => $mpesa_api->_response]);
         }
 
-        return $this->render('index',['response' => $array]);
+        return $this->render('index',['response' => array()]);
     }
 
 }
